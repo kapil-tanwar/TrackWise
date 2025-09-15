@@ -10,6 +10,8 @@ const client = new MongoClient(process.env.MONGODB_URI);
 const clientPromise = client.connect();
 
 export const authOptions = {
+  // Helps NextAuth work correctly behind proxies/preview URLs on Vercel
+  trustHost: true,
   adapter: MongoDBAdapter(clientPromise),
   providers: [
     CredentialsProvider({
