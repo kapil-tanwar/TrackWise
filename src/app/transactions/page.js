@@ -214,7 +214,7 @@ export default function TransactionsPage() {
                             ? 'text-green-400 dark:text-green-400'
                             : 'text-red-400 dark:text-red-400'
                         }`}>
-                          {transaction.type === 'income' ? '+' : '-'}${transaction.amount.toLocaleString()}
+                          {transaction.type === 'income' ? '+' : '-'}₹{transaction.amount.toLocaleString()}
                         </div>
                         <div className="flex space-x-2">
                           <Link href={`/transactions/${transaction._id}/edit`}>

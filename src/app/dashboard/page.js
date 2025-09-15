@@ -112,7 +112,7 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-green-400">
-                  ${summary?.totalIncome?.toLocaleString() || 0}
+                ₹{summary?.totalIncome?.toLocaleString() || 0}
                 </div>
               </CardContent>
             </Card>
@@ -124,7 +124,7 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-red-400">
-                  ${summary?.totalExpenses?.toLocaleString() || 0}
+                ₹{summary?.totalExpenses?.toLocaleString() || 0}
                 </div>
               </CardContent>
             </Card>
@@ -132,11 +132,11 @@ export default function DashboardPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Savings</CardTitle>
-                <DollarSign className="h-4 w-4 text-blue-400" />
+                <span className="h-4 w-4 text-blue-400 inline-flex items-center justify-center text-sm font-bold">₹</span>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-blue-400">
-                  ${summary?.savings?.toLocaleString() || 0}
+                ₹{summary?.savings?.toLocaleString() || 0}
                 </div>
               </CardContent>
             </Card>

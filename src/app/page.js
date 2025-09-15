@@ -188,15 +188,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-
-      
-      <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 py-8">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-gray-600 dark:text-gray-400">
-            © 2024 TrackWise. Built with Next.js and Tailwind CSS.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
