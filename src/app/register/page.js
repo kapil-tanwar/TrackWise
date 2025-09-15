@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { GiReceiveMoney } from 'react-icons/gi';
 
 export default function RegisterPage() {
+  const { status } = useSession();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +25,12 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.replace('/dashboard');
+    }
+  }, [status, router]);
 
   const handleChange = (e) => {
     setFormData({
@@ -60,15 +67,12 @@ export default function RegisterPage() {
       if (response.ok) {
         toast.success('Account created successfully!');
 
-        const result = await signIn('credentials', {
+        await signIn('credentials', {
           email: formData.email,
           password: formData.password,
-          redirect: false,
+          redirect: true,
+          callbackUrl: '/dashboard',
         });
-
-        if (result?.ok) {
-          router.push('/dashboard');
-        }
       } else {
         toast.error(data.message || 'Registration failed');
       }
