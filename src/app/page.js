@@ -37,154 +37,128 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      
-      <header className="absolute top-0 w-full p-4">
-        <div className="flex justify-between items-center max-w-7xl mx-auto">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
+      <header className="w-full border-b border-gray-200/70 dark:border-gray-700 mb-12 md:mb-24 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <GiReceiveMoney className="h-8 w-8 text-[#0F899B]" />
-            <span className="text-xl font-bold text-gray-900 dark:text-white">
-              TrackWise
-            </span>
+            <GiReceiveMoney className="h-6 w-6 md:h-7 md:w-7 text-[#0F899B]" />
+            <span className="text-base md:text-lg font-bold text-gray-900 dark:text-white">TrackWise</span>
           </div>
-          <div className="flex items-center space-x-4">
+          
+          <div className="flex items-center space-x-2 md:space-x-3">
             <ThemeToggle />
             <Link href="/login">
-              <Button variant="outline">Sign In</Button>
+              <Button variant="outline" className="h-8 px-3 md:h-9 md:px-4 text-sm ">Login</Button>
             </Link>
             <Link href="/register">
-              <Button className="lg:block hidden">Get Started</Button>
+              <Button className="h-8 px-3 md:h-9 md:px-4 text-sm">Get Started</Button>
             </Link>
           </div>
         </div>
       </header>
 
-      
-      <main className="pt-20 pb-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Track Your Finances
-              <span className="block text-blue-600">Like a Pro</span>
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              Transform your financial habits with our gamified personal finance tracker. 
-              Visualize your spending, earn achievements, and build better money habits.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/register">
-                <Button size="lg" className="text-lg px-8 py-3">
-                  Start Your Journey
-                </Button>
-              </Link>
-              <Link href="/login">
-                <Button variant="outline" size="lg" className="text-lg px-8 py-3">
-                  Sign In
-                </Button>
-              </Link>
+      <main className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 py-8 md:py-16 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-gray-900 dark:text-white leading-tight">
+                A easy way
+                <br />
+                for managing
+                <br />
+                <span className="relative inline-block">
+                  <span className="relative z-10">your savings</span>
+                  <span className="absolute inset-x-0 bottom-1 h-4 md:h-6 rounded-md bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-500 opacity-70"></span>
+                </span>
+              </h1>
+              <p className="mt-4 md:mt-6 text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl">
+                Enhance your research with cutting-edge financial data and business-specific tools.
+              </p>
+              <div className="mt-6 md:mt-8">
+                <Link href="/register">
+                  <Button className="bg-[#0F899B] hover:bg-emerald-600 text-white shadow-sm text-sm md:text-base px-6 py-2 md:px-8 md:py-3">Get started</Button>
+                </Link>
+              </div>
             </div>
-          </div>
 
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-                  <BarChart3 className="h-6 w-6 text-blue-600" />
+            <div className="relative order-1 lg:order-2">
+              <div className="mx-auto lg:mx-0 lg:ml-auto w-full max-w-sm md:max-w-md">
+                <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 shadow-lg p-4 md:p-6 animate-float-in transition-transform duration-200 transform-gpu hover:scale-[1.1]">
+                  <div className="h-32 md:h-40 w-full bg-gradient-to-br from-emerald-200 to-emerald-400/60 dark:from-emerald-900/40 dark:to-emerald-700/20 rounded-lg flex items-end p-3 md:p-4">
+                    <div className="grid grid-cols-7 gap-1 md:gap-2 w-full">
+                      {[...Array(7)].map((_, i) => (
+                        <div key={i} className="bg-emerald-600/90 dark:bg-emerald-500/80 rounded-md" style={{ height: `${30 + i * 6}px` }} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-4 md:mt-6 rounded-xl border border-gray-200 dark:border-gray-800 p-3 md:p-4 flex items-center justify-between">
+                    <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300">Transfer was successful!</span>
+                    <span className="text-sm md:text-base font-semibold text-gray-900 dark:text-white">Amount=$154</span>
+                  </div>
                 </div>
-                <CardTitle>Beautiful Visualizations</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Get insights into your spending patterns with interactive charts and graphs
-                </CardDescription>
-              </CardContent>
-            </Card>
 
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
-                  <Trophy className="h-6 w-6 text-green-600" />
+                {/* Collage cards - hidden on mobile, visible on larger screens */}
+                <div className="hidden md:block">
+                  <div className="absolute -bottom-16 -right-6 w-48 lg:w-56 xl:w-64 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 shadow-md p-3 lg:p-4 animate-float-in animation-delay-200 transition-transform duration-200 transform-gpu hover:scale-[1.1]">
+                    <div className="text-xs lg:text-sm text-gray-700 dark:text-gray-200 mb-2">SEC Data</div>
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="h-16 w-16 lg:h-20 lg:w-20 rounded-full border-6 lg:border-8 border-emerald-500" />
+                      <div className="text-xs lg:text-sm text-gray-600 dark:text-gray-300">$1734k+</div>
+                    </div>
+                  </div>
+
+                  <div className="absolute top-2 -left-6 w-32 lg:w-40 xl:w-48 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 shadow-md p-3 lg:p-4 animate-float-in animation-delay-400 transition-transform duration-200 transform-gpu hover:scale-[1.1]">
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Weekly Savings</div>
+                    <div className="mt-2 lg:mt-3 grid grid-cols-5 gap-1">
+                      {[8,14,20,12,18].map((h, i) => (
+                        <div key={i} className="bg-indigo-500/80 dark:bg-indigo-400/80 rounded" style={{ height: `${h}px` }} />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="absolute top-28 -left-12 w-36 lg:w-44 xl:w-52 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 shadow-md p-3 lg:p-4 animate-float-in animation-delay-600 transition-transform duration-200 transform-gpu hover:scale-[1.1]">
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="h-8 w-8 lg:h-10 lg:w-10 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600" />
+                      <div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Goal Progress</div>
+                        <div className="h-1.5 lg:h-2 w-20 lg:w-28 bg-gray-200 dark:bg-gray-800 rounded overflow-hidden">
+                          <div className="h-1.5 lg:h-2 bg-emerald-500" style={{ width: '68%' }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="absolute -bottom-20 left-0 w-48 lg:w-64 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 shadow-md p-4 lg:p-5 animate-float-in animation-delay-800 transition-transform duration-200 transform-gpu hover:scale-[1.1]">
+                    <div className="text-xs lg:text-sm font-medium text-gray-800 dark:text-gray-100">Spending Breakdown</div>
+                    <div className="mt-2 lg:mt-3 grid grid-cols-3 gap-2 lg:gap-3">
+                      {[60,34,22].map((v, i) => (
+                        <div key={i} className="text-center">
+                          <div className="mx-auto h-8 w-8 lg:h-10 lg:w-10 rounded-full border-3 lg:border-4" style={{ borderColor: i===0? '#10b981' : i===1? '#6366f1' : '#f59e0b' }} />
+                          <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">{v}%</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-64 right-68 w-48 lg:w-56 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 shadow-lg p-3 lg:p-4 animate-float-in transition-transform duration-200 transform-gpu hover:scale-[1.1]" style={{ zIndex: 2 }}>
+                    <div className="text-xs lg:text-sm font-medium text-gray-800 dark:text-gray-100">Recent Activity</div>
+                    <div className="mt-2 lg:mt-3 space-y-1 lg:space-y-2 text-xs text-gray-600 dark:text-gray-300">
+                      <div className="flex items-center justify-between"><span>Transfer</span><span className="font-semibold text-emerald-600">+$250</span></div>
+                      <div className="flex items-center justify-between"><span>Coffee</span><span className="font-semibold text-rose-600">-$6</span></div>
+                      <div className="flex items-center justify-between"><span>Groceries</span><span className="font-semibold text-rose-600">-$42</span></div>
+                    </div>
+                  </div>
+
+                  <div className="absolute -top-10 right-10 w-40 lg:w-48 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 shadow-md p-3 lg:p-4 animate-float-in animation-delay-400 transition-transform duration-200 transform-gpu hover:scale-[1.1]" style={{ zIndex: 3 }}>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Savings Rate</div>
+                    <div className="mt-2 lg:mt-3 flex items-center gap-2 lg:gap-3">
+                      <div className="h-10 w-10 lg:h-12 lg:w-12 rounded-full border-6 lg:border-8 border-emerald-500 border-t-transparent animate-spin-slow" />
+                      <div className="text-xs lg:text-sm font-semibold text-gray-900 dark:text-white">32%</div>
+                    </div>
+                  </div>
                 </div>
-                <CardTitle>Gamification</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Earn XP, unlock achievements, and maintain streaks to build better financial habits
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
-                  <Target className="h-6 w-6 text-purple-600" />
-                </div>
-                <CardTitle>Budget Tracking</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Set monthly budgets and get alerts when you're approaching your limits
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center mb-4">
-                  <DollarSign className="h-6 w-6 text-orange-600" />
-                </div>
-                <CardTitle>Multi-Currency</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Support for multiple currencies to track your finances in your preferred currency
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-4">
-                  <Zap className="h-6 w-6 text-red-600" />
-                </div>
-                <CardTitle>Real-time Updates</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Your data syncs instantly across all devices with real-time updates
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <div className="mx-auto w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-lg flex items-center justify-center mb-4">
-                  <TrendingUp className="h-6 w-6 text-indigo-600" />
-                </div>
-                <CardTitle>Progress Tracking</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Monitor your financial growth and see how your habits improve over time
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-
-          
-          <div className="text-center bg-white dark:bg-gray-800 rounded-2xl p-12 shadow-lg">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Ready to Transform Your Finances?
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-              Join thousands of users who are already building better financial habits
-            </p>
-            <Link href="/register">
-              <Button size="lg" className="text-lg px-8 py-3">
-                Get Started Free
-              </Button>
-            </Link>
+              </div>
+            </div>
           </div>
         </div>
       </main>

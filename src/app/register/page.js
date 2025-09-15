@@ -85,10 +85,24 @@ export default function RegisterPage() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-      <div className="absolute top-4 right-4">
-        <ThemeToggle />
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:bg-gray-950 dark:from-inherit dark:to-inherit">
+      {/* Navbar */}
+      <header className="w-full border-b border-gray-200/70 dark:border-gray-700 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <GiReceiveMoney className="h-6 w-6 md:h-7 md:w-7 text-[#0F899B]" />
+            <span className="text-base md:text-lg font-bold text-gray-900 dark:text-white">TrackWise</span>
+          </div>
+          <div className="flex items-center space-x-2 md:space-x-3">
+            <ThemeToggle />
+            <Link href="/login" className=''>
+              <div className="h-8 px-3 md:h-9 md:px-4 text-sm bg-[#0F899B] rounded-md flex items-center justify-center font-bold bg-gray-900 text-white dark:bg-[#0F899B]" >Login</div>
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex items-center justify-center p-4 min-h-[calc(100vh-80px)]">
       
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
@@ -187,12 +201,13 @@ export default function RegisterPage() {
           
           <div className="text-center text-sm">
             Already have an account?{' '}
-            <Link href="/login" className="text-blue-600 hover:underline">
+            <Link href="/login" className="text-[#0F899B] hover:underline">
               Sign in
             </Link>
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

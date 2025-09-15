@@ -81,7 +81,7 @@
 .dark {
   --background: #0a0a0a;
   --foreground: #d1d5db;
-  --card: #222536;
+  --card: #10121d;
   --card-foreground: #d1d5db;
   --popover: #1f1f1f;
   --popover-foreground: #d1d5db;
@@ -173,4 +173,19 @@
   .next-auth-provider {
     display: none !important;
   }
+}
+
+@layer utilities {
+  @keyframes floatIn {
+    0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+    60% { opacity: 1; transform: translateY(-4px) scale(1.01); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .animate-float-in {
+    animation: floatIn 800ms var(--ease-out-quad, cubic-bezier(0.22, 1, 0.36, 1)) both;
+  }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-800 { animation-delay: 800ms; }
 }
