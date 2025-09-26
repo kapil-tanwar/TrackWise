@@ -8,7 +8,7 @@ TrackWise helps you track income and expenses, visualize spending with rich char
 1) Clone and install
 ```bash
 git clone <url>
-cd personal-finance-visualizer
+cd fileName
 npm install
 ```
 
