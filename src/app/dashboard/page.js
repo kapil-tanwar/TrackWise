@@ -92,7 +92,7 @@ export default function DashboardPage() {
                 Welcome back, {user?.name}!
               </h1>
               <p className="text-gray-600 dark:text-gray-400 mt-1">
-                Here's your financial overview
+                Here&apos;s your financial overview
               </p>
             </div>
             <Link href="/transactions/new">

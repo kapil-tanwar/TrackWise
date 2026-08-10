@@ -131,7 +131,7 @@ export default function AchievementsPage() {
                 Your Achievements
               </CardTitle>
               <CardDescription>
-                {achievements.length} achievement's unlocked
+                {achievements.length} achievement&apos;s unlocked
               </CardDescription>
             </CardHeader>
             <CardContent>
