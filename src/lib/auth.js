@@ -5,6 +5,7 @@ import dbConnect from './db';
 import User from '@/models/User';
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   trustHost: true,
   providers: [
     CredentialsProvider({
@@ -49,21 +50,23 @@ export const authOptions = {
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      
-      const localBaseUrl = process.env.NODE_ENV === 'development' 
-        ? 'http://localhost:3000' 
-        : baseUrl;
-        
-      
       if (url.includes('signout') || url.includes('logout')) {
-        return `${localBaseUrl}/login`
+        return `${baseUrl}/login`;
       }
       
-      if (url.startsWith("/")) return `${localBaseUrl}${url}`
+      if (url.startsWith('/')) {
+        return `${baseUrl}${url}`;
+      }
       
-      if (new URL(url).origin === localBaseUrl) return url
+      try {
+        if (new URL(url).origin === baseUrl) {
+          return url;
+        }
+      } catch (err) {
+        // Fallback if url is invalid
+      }
       
-      return localBaseUrl
+      return baseUrl;
     },
     async jwt({ token, user }) {
       if (user) {
