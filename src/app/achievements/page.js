@@ -12,8 +12,13 @@ import {
   Star, 
   Zap, 
   Target,
-  Calendar,
-  Award
+  Award,
+  Flame,
+  TrendingUp,
+  ShieldCheck,
+  BarChart2,
+  CheckCircle2,
+  Lock
 } from 'lucide-react';
 import { PageLoading } from '@/components/loading';
 
@@ -59,6 +64,25 @@ export default function AchievementsPage() {
 
   const currentLevelXp = userStats?.xp % 100 || 0;
   const nextLevelXp = 100 - currentLevelXp;
+
+  // Map icon string/emoji to a lucide component
+  const iconMap = {
+    '👣': Target,
+    '💰': ShieldCheck,
+    '🔥': Flame,
+    '🎯': Target,
+    '📈': TrendingUp,
+    '⭐': Star,
+    '🏅': Award,
+    '🏆': Trophy,
+    '🌟': Star,
+    '📊': BarChart2,
+  };
+
+  const AchIcon = ({ icon, className }) => {
+    const Comp = iconMap[icon] || Award;
+    return <Comp className={className} />;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
@@ -153,7 +177,9 @@ export default function AchievementsPage() {
                       className="p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                     >
                       <div className="flex items-start space-x-3">
-                        <div className="text-2xl">{achievement.icon}</div>
+                        <div className="mt-0.5 p-2 rounded-md bg-gray-100 dark:bg-gray-800">
+                          <AchIcon icon={achievement.icon} className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                        </div>
                         <div className="flex-1">
                           <h3 className="font-semibold text-gray-900 dark:text-white">
                             {achievement.title}
@@ -224,14 +250,14 @@ export default function AchievementsPage() {
                     description: 'Stay under budget for a month',
                     icon: '💰',
                     xpReward: 150,
-                    unlocked: false, 
+                    unlocked: false,
                   },
                   {
                     title: 'Transaction Master',
                     description: 'Log 100 transactions',
                     icon: '📊',
                     xpReward: 250,
-                    unlocked: false, 
+                    unlocked: false,
                   },
                 ].map((achievement, index) => (
                   <div
@@ -243,8 +269,15 @@ export default function AchievementsPage() {
                     }`}
                   >
                     <div className="flex items-start space-x-3">
-                      <div className={`text-2xl ${achievement.unlocked ? '' : 'opacity-50'}`}>
-                        {achievement.icon}
+                      <div className={`mt-0.5 p-2 rounded-md ${
+                        achievement.unlocked
+                          ? 'bg-green-100 dark:bg-green-900/30'
+                          : 'bg-gray-100 dark:bg-gray-800 opacity-50'
+                      }`}>
+                        {achievement.unlocked
+                          ? <AchIcon icon={achievement.icon} className="h-4 w-4 text-green-600 dark:text-green-400" />
+                          : <Lock className="h-4 w-4 text-gray-400" />
+                        }
                       </div>
                       <div className="flex-1">
                         <h3 className={`font-semibold ${
