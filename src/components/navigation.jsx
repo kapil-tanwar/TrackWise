@@ -45,7 +45,7 @@ export function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/dashboard" className="flex-shrink-0 flex items-center hover:opacity-80 transition-opacity cursor-pointer">
-              <GiReceiveMoney className="h-8 w-8 text-[#0F899B]" />
+              <GiReceiveMoney className="h-8 w-8 text-gray-900 dark:text-white" />
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
                 TrackWise
               </span>

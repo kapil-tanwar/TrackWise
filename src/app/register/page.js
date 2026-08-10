@@ -90,7 +90,7 @@ export default function RegisterPage() {
       <header className="w-full border-b border-gray-200/70 dark:border-gray-700 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <GiReceiveMoney className="h-6 w-6 md:h-7 md:w-7 text-[#0F899B]" />
+            <GiReceiveMoney className="h-6 w-6 md:h-7 md:w-7 text-gray-900 dark:text-white" />
             <span className="text-base md:text-lg font-bold text-gray-900 dark:text-white">TrackWise</span>
           </div>
           <div className="flex items-center space-x-2 md:space-x-3">
@@ -107,7 +107,7 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-4">
-            <GiReceiveMoney className="h-8 w-8 text-[#0F899B]" />
+            <GiReceiveMoney className="h-8 w-8 text-gray-900 dark:text-white" />
           </div>
           <CardTitle className="text-2xl text-center">Create account</CardTitle>
           <CardDescription className="text-center">
