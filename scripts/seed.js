@@ -31,7 +31,7 @@ loadEnv(join(root, '.env.local'));
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
-  console.error('❌  MONGODB_URI not found. Make sure .env or .env.local exists.');
+  console.error('  MONGODB_URI not found. Make sure .env or .env.local exists.');
   process.exit(1);
 }
 
@@ -183,6 +183,6 @@ async function seed() {
 }
 
 seed().catch(err => {
-  console.error('❌  Seed failed:', err.message);
+  console.error('  Seed failed:', err.message);
   mongoose.disconnect().then(() => process.exit(1));
 });
