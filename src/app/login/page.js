@@ -76,10 +76,10 @@ export default function LoginPage() {
       {/* Navbar */}
       <header className="w-full border-b  dark:border-gray-700 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer">
             <GiReceiveMoney className="h-6 w-6 md:h-7 md:w-7 text-gray-900 dark:text-white" />
             <span className="text-base md:text-lg font-bold text-gray-900 dark:text-white">TrackWise</span>
-          </div>
+          </Link>
           <div className="flex items-center space-x-2 md:space-x-3">
             <ThemeToggle />
             <Link href="/register">
@@ -93,9 +93,9 @@ export default function LoginPage() {
       
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <div className="flex items-center justify-center mb-4">
+          <Link href="/" className="flex items-center justify-center mb-4 hover:opacity-80 transition-opacity cursor-pointer">
             <GiReceiveMoney className="h-8 w-8 text-gray-900 dark:text-white" />
-          </div>
+          </Link>
           <CardTitle className="text-2xl text-center">Welcome back</CardTitle>
           <CardDescription className="text-center">
             Sign in to your account to continue
