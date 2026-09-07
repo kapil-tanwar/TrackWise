@@ -50,6 +50,14 @@ export async function PUT(request) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
+    // Protect demo account from being modified
+    if (session.user.email === 'demo@trackwise.com') {
+      return NextResponse.json(
+        { message: 'Profile editing is disabled for the demo account.' },
+        { status: 403 }
+      );
+    }
+
     const { name, currency, budgetLimit, themePreference } = await request.json();
 
     await dbConnect();

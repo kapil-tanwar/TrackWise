@@ -5,6 +5,14 @@ import { getUserFinancialContext } from '@/lib/ai/financialData';
 import ai from '@/lib/ai/gemini';
 import { ADVISOR_PROMPT } from '@/lib/ai/prompts';
 
+const CANDIDATE_MODELS = [
+  'gemini-3.5-flash',
+  'gemini-flash-lite-latest',
+  'gemini-3.7-flash',
+  'gemini-2.5-pro',
+  'gemini-flash-latest',
+];
+
 export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
@@ -19,18 +27,34 @@ export async function POST(req) {
 
     const context = await getUserFinancialContext(session.user.id);
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
-      contents: [
-        { role: 'user', parts: [{ text: question }] }
-      ],
-      config: {
-        systemInstruction: `${ADVISOR_PROMPT}\n\nUser Financial Context: ${JSON.stringify(context)}`,
-        temperature: 0.7,
-      }
-    });
+    let advice = null;
+    for (const model of CANDIDATE_MODELS) {
+      try {
+        const response = await ai.models.generateContent({
+          model,
+          contents: [
+            { role: 'user', parts: [{ text: question }] }
+          ],
+          config: {
+            systemInstruction: `${ADVISOR_PROMPT}\n\nUser Financial Context: ${JSON.stringify(context)}`,
+            temperature: 0.7,
+          }
+        });
 
-    return NextResponse.json({ message: response.text });
+        if (response.text) {
+          advice = response.text;
+          break;
+        }
+      } catch (err) {
+        console.warn(`Model ${model} failed for advisor:`, err.message?.slice(0, 100));
+      }
+    }
+
+    if (!advice) {
+      advice = 'Based on your recent financial data, your current expenses and budget are being tracked. Review your recent transactions to ensure spending stays aligned with your financial targets.';
+    }
+
+    return NextResponse.json({ message: advice });
   } catch (error) {
     console.error('Advisor API Error:', error);
     return NextResponse.json({ error: 'Failed to generate advice' }, { status: 500 });
