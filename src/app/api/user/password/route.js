@@ -13,6 +13,14 @@ export async function PUT(request) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
+    // Protect demo account from being modified
+    if (session.user.email === 'demo@trackwise.com') {
+      return NextResponse.json(
+        { message: 'Password changes are disabled for the demo account.' },
+        { status: 403 }
+      );
+    }
+
     const { currentPassword, newPassword } = await request.json();
 
     if (!currentPassword || !newPassword) {

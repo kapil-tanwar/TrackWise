@@ -17,7 +17,8 @@ import {
   Sparkles,
   AlertCircle,
   Lightbulb,
-  CheckCircle2
+  CheckCircle2,
+  RefreshCw
 } from 'lucide-react';
 import { 
   LineChart, 
@@ -29,7 +30,8 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell
+  Cell,
+  Legend
 } from 'recharts';
 import Link from 'next/link';
 import { PageLoading } from '@/components/loading';
@@ -43,7 +45,7 @@ export default function DashboardPage() {
   const [dashboardData, setDashboardData] = useState(null);
   const [aiInsights, setAiInsights] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [loadingInsights, setLoadingInsights] = useState(true);
+  const [loadingInsights, setLoadingInsights] = useState(false);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -54,7 +56,6 @@ export default function DashboardPage() {
   useEffect(() => {
     if (session) {
       fetchDashboardData();
-      fetchAiInsights();
     }
   }, [session]);
 
@@ -72,6 +73,7 @@ export default function DashboardPage() {
 
   const fetchAiInsights = async () => {
     try {
+      setLoadingInsights(true);
       const response = await fetch('/api/ai/insights', {
         method: 'POST',
         headers: {
@@ -138,6 +140,9 @@ export default function DashboardPage() {
                 <div className="text-2xl font-bold text-green-400">
                 ₹{summary?.totalIncome?.toLocaleString() || 0}
                 </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {summary?.isCurrentMonth === false ? 'Last 6 months' : 'This month'}
+                </p>
               </CardContent>
             </Card>
 
@@ -150,6 +155,9 @@ export default function DashboardPage() {
                 <div className="text-2xl font-bold text-red-400">
                 ₹{summary?.totalExpenses?.toLocaleString() || 0}
                 </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {summary?.isCurrentMonth === false ? 'Last 6 months' : 'This month'}
+                </p>
               </CardContent>
             </Card>
 
@@ -162,6 +170,9 @@ export default function DashboardPage() {
                 <div className="text-2xl font-bold text-blue-400">
                 ₹{summary?.savings?.toLocaleString() || 0}
                 </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {summary?.isCurrentMonth === false ? 'Last 6 months' : 'This month'}
+                </p>
               </CardContent>
             </Card>
 
@@ -230,14 +241,33 @@ export default function DashboardPage() {
           <div className="mb-8">
             <Card className="border-t-4 border-t-purple-500 bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-gray-800">
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-purple-700 dark:text-purple-400">
-                  <Sparkles className="h-5 w-5" />
-                  AI Monthly Insights
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2 text-purple-700 dark:text-purple-400">
+                    <Sparkles className="h-5 w-5" />
+                    AI Monthly Insights
+                  </CardTitle>
+                  {aiInsights && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={fetchAiInsights}
+                      disabled={loadingInsights}
+                      className="text-purple-600 dark:text-purple-400 hover:text-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900/30 gap-1.5 text-xs"
+                    >
+                      <RefreshCw className={`h-3.5 w-3.5 ${loadingInsights ? 'animate-spin' : ''}`} />
+                      Refresh
+                    </Button>
+                  )}
+                </div>
               </CardHeader>
               <CardContent>
                 {loadingInsights ? (
-                  <p className="text-gray-500 text-sm animate-pulse">Analyzing your financial performance...</p>
+                  <div className="flex flex-col items-center justify-center py-8 gap-3">
+                    <div className="relative">
+                      <Sparkles className="h-8 w-8 text-purple-400 animate-pulse" />
+                    </div>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm animate-pulse">Analyzing your financial performance...</p>
+                  </div>
                 ) : aiInsights ? (
                   <div className="space-y-4 text-sm">
                     <p className="text-gray-800 dark:text-gray-200 font-medium">
@@ -277,7 +307,22 @@ export default function DashboardPage() {
                     </div>
                   </div>
                 ) : (
-                  <p className="text-gray-500 text-sm">Could not load insights at this time.</p>
+                  <div className="flex flex-col items-center justify-center py-8 gap-4">
+                    <div className="w-14 h-14 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                      <Sparkles className="h-7 w-7 text-purple-500" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-700 dark:text-gray-300 font-medium text-sm">Get AI-powered financial insights</p>
+                      <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">Analyze your spending patterns, strengths, and recommendations</p>
+                    </div>
+                    <Button
+                      onClick={fetchAiInsights}
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white gap-2 shadow-md shadow-purple-500/20"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      Generate Insights
+                    </Button>
+                  </div>
                 )}
               </CardContent>
             </Card>
@@ -321,29 +366,58 @@ export default function DashboardPage() {
               <CardHeader>
                 <CardTitle>Expense Categories</CardTitle>
                 <CardDescription>
-                  Breakdown of your spending by category
+                  {summary?.isCurrentMonth === false
+                    ? 'Breakdown of your spending over the last 6 months'
+                    : 'Breakdown of your spending by category'}
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={categoryBreakdown || []}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {(categoryBreakdown || []).map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
+                {(categoryBreakdown || []).length === 0 ? (
+                  <div className="flex items-center justify-center h-[300px] text-gray-400 text-sm">
+                    No expense data available
+                  </div>
+                ) : (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <PieChart>
+                      <Pie
+                        data={categoryBreakdown || []}
+                        cx="50%"
+                        cy="45%"
+                        outerRadius={90}
+                        fill="#8884d8"
+                        dataKey="value"
+                      >
+                        {(categoryBreakdown || []).map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        formatter={(value, name, props) => {
+                          const total = (categoryBreakdown || []).reduce((s, d) => s + d.value, 0);
+                          const pct = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                          return [`₹${value.toLocaleString()} (${pct}%)`, name];
+                        }}
+                        contentStyle={{
+                          backgroundColor: '#1f2937',
+                          border: '1px solid #374151',
+                          borderRadius: '8px',
+                          color: '#f9fafb',
+                          fontSize: '13px',
+                        }}
+                      />
+                      <Legend
+                        iconType="circle"
+                        iconSize={10}
+                        formatter={(value, entry) => {
+                          const total = (categoryBreakdown || []).reduce((s, d) => s + d.value, 0);
+                          const pct = total > 0 ? ((entry.payload.value / total) * 100).toFixed(0) : 0;
+                          return `${value} ${pct}%`;
+                        }}
+                        wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                )}
               </CardContent>
             </Card>
           </div>

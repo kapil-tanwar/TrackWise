@@ -26,6 +26,8 @@ export async function GET() {
     const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
     const currentMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
+    // Six-month window for summary + category breakdown
+    const sixMonthsAgoStart = new Date(now.getFullYear(), now.getMonth() - 5, 1);
 
     const currentMonthTransactions = await Transaction.find({
       userId: user._id,
@@ -35,20 +37,26 @@ export async function GET() {
       },
     });
 
+    // Use 6-month window when current month has no data (e.g. demo account)
+    const hasCurrentMonthData = currentMonthTransactions.length > 0;
 
-    const totalIncome = currentMonthTransactions
+    const summaryTransactions = hasCurrentMonthData
+      ? currentMonthTransactions
+      : await Transaction.find({
+          userId: user._id,
+          date: { $gte: sixMonthsAgoStart },
+        });
+
+    const totalIncome = summaryTransactions
       .filter(t => t.type === 'income')
       .reduce((sum, t) => sum + t.amount, 0);
 
-    const totalExpenses = currentMonthTransactions
+    const totalExpenses = summaryTransactions
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + t.amount, 0);
 
     const savings = totalIncome - totalExpenses;
 
-
-    const sixMonthsAgo = new Date();
-    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
     const monthlyTrend = [];
     for (let i = 5; i >= 0; i--) {
@@ -78,7 +86,8 @@ export async function GET() {
       });
     }
 
-    const expenseTransactions = currentMonthTransactions.filter(t => t.type === 'expense');
+    // Build category breakdown from the same window as summary
+    const expenseTransactions = summaryTransactions.filter(t => t.type === 'expense');
     const categoryMap = {};
     
     expenseTransactions.forEach(transaction => {
@@ -103,6 +112,7 @@ export async function GET() {
         totalIncome,
         totalExpenses,
         savings,
+        isCurrentMonth: hasCurrentMonthData,
       },
       monthlyTrend,
       categoryBreakdown,

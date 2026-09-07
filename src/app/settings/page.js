@@ -27,6 +27,7 @@ export default function SettingsPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const isDemo = session?.user?.email === 'demo@trackwise.com';
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -185,6 +186,18 @@ export default function SettingsPage() {
             </p>
           </div>
 
+          {isDemo && (
+            <div className="mb-6 flex items-start gap-3 rounded-lg border border-amber-300 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/40 px-4 py-3">
+              <span className="text-xl leading-tight">🔒</span>
+              <div>
+                <p className="font-semibold text-amber-800 dark:text-amber-300 text-sm">Demo Account — Read Only</p>
+                <p className="text-amber-700 dark:text-amber-400 text-sm mt-0.5">
+                  Profile and password changes are disabled for the demo account so all visitors can access it.
+                </p>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -274,7 +287,7 @@ export default function SettingsPage() {
                   </div>
 
                   <div className="flex justify-end">
-                    <Button type="submit" disabled={saving}>
+                    <Button type="submit" disabled={saving || isDemo} title={isDemo ? 'Disabled for demo account' : undefined}>
                       <Save className="h-4 w-4 mr-2" />
                       {saving ? 'Saving...' : 'Save Changes'}
                     </Button>
@@ -341,7 +354,7 @@ export default function SettingsPage() {
                   </div>
 
                   <div className="flex justify-end">
-                    <Button type="submit" disabled={saving}>
+                    <Button type="submit" disabled={saving || isDemo} title={isDemo ? 'Disabled for demo account' : undefined}>
                       <Save className="h-4 w-4 mr-2" />
                       {saving ? 'Changing...' : 'Change Password'}
                     </Button>
